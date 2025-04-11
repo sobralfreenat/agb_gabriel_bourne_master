@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Gabriel Bourne | Linguistic Transformation Master</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Courier+Prime&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Main Colors */
+            --black: #000000;
+            --navy: #0A1F3F;
+            --gray: #333333;
+            
+            /* Accent Colors */
+            --camel: #D2B48C;
+            --matrix-green: #00FF41;
+            --burberry-red: #AD1F25;
+            --gold: #BFA760;
+            --white: #FFFFFF;
+            
+            /* Font Families */
+            --font-title: 'Playfair Display', serif;
+            --font-subtitle: 'Montserrat', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+            --font-special: 'Courier Prime', monospace;
+            --font-decorative: 'Cinzel', serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Modern Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            position: relative;
+            padding: 0.5rem 0;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--matrix-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Modern Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+            padding: 8rem 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://source.unsplash.com/random/1920x1080/?london') center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, var(--white), var(--matrix-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitch 2s infinite;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* Modern Cards */
+        .expertise-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .expertise-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--matrix-green);
+            transition: transform 0.3s ease;
+        }
+
+        .expertise-card:hover .card-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        /* Modern Form */
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: var(--white);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--matrix-green);
+            box-shadow: 0 0 0 2px rgba(0, 255, 65, 0.2);
+        }
+
+        .form-group input:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -1.5rem;
+            left: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--matrix-green);
+        }
+
+        /* Modern Buttons */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--matrix-green), #00cc33);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: var(--black);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #00cc33, var(--matrix-green));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        /* Modern Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .burger {
+                display: block;
+            }
+        }
+
+        /* Section Spacing */
+        section {
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .separator {
+            width: 100px;
+            height: 3px;
+            background: var(--matrix-green);
+            margin: 0 auto;
+        }
+
+        /* Content Spacing */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .text-column {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .text-column h3 {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+        }
+
+        .text-column p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Expertise Cards Spacing */
+        .expertise-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .expertise-category {
+            margin-bottom: 4rem;
+        }
+
+        .expertise-category h3 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            padding: 2rem;
+        }
+
+        .expertise-card {
+            padding: 3rem 2rem;
+            margin: 1rem;
+        }
+
+        /* Contact Section Spacing */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 2rem;
+        }
+
+        .contact-info {
+            padding: 2rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 3rem;
+        }
+
+        /* Footer Spacing */
+        footer {
+            padding: 4rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 4rem;
+            padding: 2rem;
+        }
+
+        .footer-logo {
+            text-align: center;
+        }
+
+        .footer-logo h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--white);
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--matrix-green);
+        }
+
+        /* Modern Logo */
+        .logo {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--matrix-green));
+            transition: filter 0.3s ease;
+        }
+
+        .logo:hover img {
+            filter: drop-shadow(0 0 15px var(--matrix-green));
+        }
+
+        .logo-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--matrix-green);
+            opacity: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.15;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        .logo:hover .logo-glow {
+            animation: pulse 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-overlay"></div>
+    
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <div class="logo-glow"></div>
+                <img src="https://d1yei2z3i6k35z.cloudfront.net/3119789/67f9a332d8240_AGB_Gabriel_Provisorio.webp" alt="AGB Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#background">Background</a></li>
+                <li><a href="#knowledge">Knowledge</a></li>
+                <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1 class="floating">Agent Gabriel Bourne</h1>
+                <h2>Linguistic Transformation Master</h2>
+                <p>Bridging worlds through language with the elegance of a Kingsman and the street wisdom of 90s West London</p>
+                <a href="#background" class="btn-primary">Discover</a>
+            </div>
+        </section>
+
+        <section id="background" class="background">
+            <div class="section-header">
+                <h2>Background & Formation</h2>
+                <div class="separator"></div>
+            </div>
+            <div class="content-container">
+                <div class="text-column">
+                    <h3>West London Origins</h3>
+                    <p>Born and raised in West London, immersed in the rich cultural diversity of the 90s. Shaped by the convergence of Jamaican, Arab, Scottish, and emerging communities.</p>
+                    
+                    <h3>Cultural Crucible</h3>
+                    <p>Developed between sound systems, shisha lounges, and traditional British pubs. Over 20 years of experience transforming language education.</p>
+                    
+                    <h3>Beyond Tourist Trails</h3>
+                    <p>Deep understanding of London beyond the tourist trails. Mastery of cross-cultural communication, especially English-Portuguese dynamics.</p>
+                    
+                    <a href="#knowledge" class="btn-primary">Explore Expertise</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="knowledge" class="knowledge">
+            <div class="section-header">
+                <h2>Knowledge & Expertise</h2>
+                <div class="separator"></div>
+            </div>
+            
+            <div class="expertise-container">
+                <div class="expertise-category">
+                    <h3>Cultural Mastery</h3>
+                    <div class="expertise-grid">
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <h4>Pop Culture</h4>
+                            <p>Encyclopedic knowledge of cinema, music, and art across decades</p>
+                        </div>
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-city"></i>
+                            </div>
+                            <h4>Urban Culture</h4>
+                            <p>Deep expertise in American hip-hop (90s/2000s) and British urban culture</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="section-header">
+                <h2>Contact</h2>
+                <div class="separator"></div>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Ready to Transform Your Language Journey?</h3>
+                    <p>Connect with Agent Gabriel Bourne to discover how linguistic transformation can elevate your English learning experience.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>West London, United Kingdom</p>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <p>contact@agentgabrielbourne.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form action="#" method="POST" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder=" " required>
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder=" " required>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo">
+                    <div class="logo-glow"></div>
+                    <img src="https://d1yei2z3i6k35z.cloudfront.net/3119789/67f9a332d8240_AGB_Gabriel_Provisorio.webp" alt="AGB Logo">
+                </div>
+                <p>Linguistic Transformation Master</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#knowledge">Knowledge</a></li>
+                    <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation scroll effect
+            const header = document.querySelector('header');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('section');
+            
+            // Matrix code animation effect
+            createMatrixEffect();
+            
+            // Mobile navigation toggle
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            
+            burger.addEventListener('click', function() {
+                nav.classList.toggle('nav-active');
+                burger.classList.toggle('toggle');
+            });
+            
+            // Smooth scrolling for navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (nav.classList.contains('nav-active')) {
+                        nav.classList.remove('nav-active');
+                        burger.classList.remove('toggle');
+                    }
+                });
+            });
+            
+            // Scroll event listener
+            window.addEventListener('scroll', function() {
+                // Header background change on scroll
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Active link highlight based on scroll position
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (pageYOffset >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Form submission handling
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Simple validation
+                    if (!name || !email || !message) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+                    
+                    // Simulate form submission
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending...';
+                    
+                    // Simulate API call with timeout
+                    setTimeout(() => {
+                        alert('Message sent successfully!');
+                        contactForm.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }, 1500);
+                });
+            }
+        });
+
+        // Matrix code effect function
+        function createMatrixEffect() {
+            const matrixOverlay = document.querySelector('.matrix-overlay');
+            
+            // Only create the effect if the overlay exists
+            if (!matrixOverlay) return;
+            
+            // Create canvas for matrix effect
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.position = 'absolute';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.zIndex = '-1';
+            canvas.style.opacity = '0.05';
+            
+            matrixOverlay.appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Matrix characters
+            const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+            
+            // Convert the string to an array of single characters
+            const characters = matrixChars.split("");
+            
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            
+            // Array to store current y position of each column
+            const drops = [];
+            
+            // Initialize all columns with random y positions
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * -100;
+            }
+            
+            // Drawing the characters
+            function draw() {
+                // Set semi-transparent black background
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Set color and font for the falling characters
+                ctx.fillStyle = "#00FF41";
+                ctx.font = fontSize + "px monospace";
+                
+                // Loop through each column
+                for (let i = 0; i < drops.length; i++) {
+                    // Choose a random character
+                    const text = characters[Math.floor(Math.random() * characters.length)];
+                    
+                    // Draw the character
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move the drop down
+                    drops[i]++;
+                    
+                    // Reset drop to top with random delay when it reaches bottom
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                }
+            }
+            
+            // Set interval to call draw function
+            setInterval(draw, 35);
+            
+            // Resize canvas when window is resized
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                // Recalculate columns
+                const newColumns = canvas.width / fontSize;
+                
+                // Adjust drops array
+                if (newColumns > drops.length) {
+                    // Add new columns
+                    for (let i = drops.length; i < newColumns; i++) {
+                        drops[i] = Math.random() * -100;
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
