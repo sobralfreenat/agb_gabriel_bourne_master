@@ -702,29 +702,15 @@
         }
 
         /* Chat iframe */
-        #chat-frame {
+        #chatIframe {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 380px;
-            height: 680px;
+            bottom: 0;
+            right: 0;
             border: none;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 999;
-            pointer-events: all;
-            transition: transform 0.3s ease;
-            transform-origin: bottom right;
-            backdrop-filter: blur(5px);
-        }
-
-        #chat-frame.closed {
-            pointer-events: all;
-            transform: scale(0.89);
-        }
-
-        /* Ensure chat doesn't block navigation */
-        .side-nav {
-            z-index: 1000;
+            width: 420px;
+            height: 700px;
+            z-index: 9999;
+            allow: clipboard-write
         }
     </style>
 </head>
@@ -1032,12 +1018,11 @@
         </div>
     </footer>
 
-    <!-- Chat Widget -->
-    <iframe id="chat-frame" 
+    <!-- Chat iframe -->
+    <iframe id="chatIframe" 
         src="https://sobralfreenat.github.io/fnw_agb_chat_matrix/" 
-        frameborder="0" 
-        allow="clipboard-write"
-        class="closed">
+        style="position: fixed; bottom: 0; right: 0; border: none; width: 420px; height: 700px; z-index: 9999;"
+        allow="clipboard-write">
     </iframe>
 
     <script>
@@ -1287,18 +1272,50 @@
             }, 1000);
         }
 
-        // Enhanced chat iframe control
-        const chatFrame = document.getElementById('chat-frame');
-        
+        // Chat iframe communication
+        const chatIframe = document.getElementById('chatIframe');
+        let isChatOpen = false;
+
+        // Listen for messages from the chat iframe
         window.addEventListener('message', function(event) {
-            // Verify origin for security
-            if (event.origin !== 'https://sobralfreenat.github.io') return;
-            
-            // Listen for chat open/close events from the iframe
+            console.log('Parent received message:', event.data);
             if (event.data === 'chat-opened') {
-                chatFrame.classList.remove('closed');
+                isChatOpen = true;
+                console.log('Chat opened in parent');
             } else if (event.data === 'chat-closed') {
-                chatFrame.classList.add('closed');
+                isChatOpen = false;
+                console.log('Chat closed in parent');
+            }
+        });
+
+        // Function to toggle chat
+        function toggleChat() {
+            console.log('Parent sending toggle message');
+            chatIframe.contentWindow.postMessage('toggle-chat', '*');
+        }
+
+        // Add click event to the chat toggle button area
+        document.addEventListener('click', function(event) {
+            const rect = chatIframe.getBoundingClientRect();
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+
+            // Expanded click detection area
+            const buttonSize = 70;
+            const margin = 10;
+            
+            const buttonRight = rect.right - margin;
+            const buttonLeft = buttonRight - buttonSize;
+            const buttonBottom = rect.bottom - margin;
+            const buttonTop = buttonBottom - buttonSize;
+
+            console.log('Click coordinates:', { x: clickX, y: clickY });
+            console.log('Button area:', { left: buttonLeft, right: buttonRight, top: buttonTop, bottom: buttonBottom });
+
+            if (clickX >= buttonLeft && clickX <= buttonRight &&
+                clickY >= buttonTop && clickY <= buttonBottom) {
+                console.log('Toggle button area clicked');
+                toggleChat();
             }
         });
     </script>
