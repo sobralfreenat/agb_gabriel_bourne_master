@@ -133,6 +133,41 @@
             position: relative;
         }
 
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--matrix-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar-container:hover img {
+            transform: scale(1.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
         .hero h1 {
             font-size: 4.5rem;
             margin-bottom: 2rem;
@@ -517,10 +552,236 @@
         .logo:hover .logo-glow {
             animation: pulse 1s ease-in-out infinite;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid var(--matrix-green);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: auto;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--matrix-green);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h3 {
+            font-size: 2rem;
+            color: var(--matrix-green);
+        }
+
+        .modal-body {
+            margin-bottom: 2rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0.5rem;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .side-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-nav li {
+            margin: 1rem 0;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .side-nav a:hover {
+            color: var(--matrix-green);
+        }
+
+        .side-nav i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .side-nav .tooltip {
+            position: absolute;
+            right: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--matrix-green);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .side-nav a:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: calc(100% + 20px);
+        }
+
+        .side-nav a.active {
+            color: var(--matrix-green);
+            transform: scale(1.2);
+        }
+
+        .side-nav a.active::before {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: var(--matrix-green);
+            border-radius: 50%;
+            left: -10px;
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        @media screen and (max-width: 768px) {
+            .side-nav {
+                display: none;
+            }
+        }
+
+        /* Chat iframe */
+        #chat-frame {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 380px;
+            height: 600px;
+            border: none;
+            background: transparent;
+            z-index: 999;
+            pointer-events: all;
+            transition: transform 0.3s ease;
+        }
+
+        #chat-frame.closed {
+            pointer-events: all;
+            transform: scale(0.9);
+        }
     </style>
 </head>
 <body>
     <div class="matrix-overlay"></div>
+    
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+        <ul>
+            <li>
+                <a href="#home">
+                    <i class="fas fa-home"></i>
+                    <span class="tooltip">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#background">
+                    <i class="fas fa-user-tie"></i>
+                    <span class="tooltip">Background</span>
+                </a>
+            </li>
+            <li>
+                <a href="#knowledge">
+                    <i class="fas fa-brain"></i>
+                    <span class="tooltip">Knowledge</span>
+                </a>
+            </li>
+            <li>
+                <a href="#methodology">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="tooltip">Methodology</span>
+                </a>
+            </li>
+            <li>
+                <a href="#platform">
+                    <i class="fas fa-laptop-code"></i>
+                    <span class="tooltip">Platform</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contact">
+                    <i class="fas fa-envelope"></i>
+                    <span class="tooltip">Contact</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     
     <header>
         <nav class="main-nav">
@@ -533,6 +794,7 @@
                 <li><a href="#background">Background</a></li>
                 <li><a href="#knowledge">Knowledge</a></li>
                 <li><a href="#methodology">Methodology</a></li>
+                <li><a href="#platform">Platform</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="burger">
@@ -546,6 +808,9 @@
     <main>
         <section id="home" class="hero">
             <div class="hero-content">
+                <div class="avatar-container">
+                    <img src="https://d1yei2z3i6k35z.cloudfront.net/3119789/67f9b8f071647_avatar.webp" alt="Agent Gabriel Bourne Avatar">
+                </div>
                 <h1 class="floating">Agent Gabriel Bourne</h1>
                 <h2>Linguistic Transformation Master</h2>
                 <p>Bridging worlds through language with the elegance of a Kingsman and the street wisdom of 90s West London</p>
@@ -598,6 +863,110 @@
                             <h4>Urban Culture</h4>
                             <p>Deep expertise in American hip-hop (90s/2000s) and British urban culture</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="methodology" class="methodology">
+            <div class="section-header">
+                <h2>Methodology</h2>
+                <div class="separator"></div>
+            </div>
+            
+            <div class="expertise-container">
+                <div class="expertise-category">
+                    <h3>Transformative Learning Approach</h3>
+                    <div class="expertise-grid">
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>Immersive Experience</h4>
+                            <p>Deep cultural immersion through authentic content and real-world scenarios</p>
+                        </div>
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4>Dynamic Interaction</h4>
+                            <p>Active conversation practice with focus on natural fluency and confidence</p>
+                        </div>
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Progressive Development</h4>
+                            <p>Structured advancement from basics to advanced communication skills</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="platform" class="platform">
+            <div class="section-header">
+                <h2>Platform</h2>
+                <div class="separator"></div>
+            </div>
+            
+            <div class="expertise-container">
+                <div class="expertise-category">
+                    <h3>Digital Learning Environment</h3>
+                    <div class="expertise-grid">
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <h4>Virtual Classroom</h4>
+                            <p>State-of-the-art online learning platform with interactive features</p>
+                        </div>
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h4>Mobile Learning</h4>
+                            <p>Learn anywhere, anytime with our mobile-optimized platform</p>
+                        </div>
+                        <div class="expertise-card">
+                            <div class="card-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h4>Learning Tools</h4>
+                            <p>Comprehensive suite of language learning tools and resources</p>
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-top: 3rem;">
+                        <button class="btn-primary" onclick="openPlatformModal()">Learn More About Our Platform</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Modal -->
+            <div id="platformModal" class="modal">
+                <div class="modal-content">
+                    <span class="modal-close" onclick="closePlatformModal()">&times;</span>
+                    <div class="modal-header">
+                        <h3>AGB Learning Platform</h3>
+                    </div>
+                    <div class="modal-body">
+                        <h4 style="color: var(--matrix-green); margin-bottom: 1rem;">Advanced Learning Features</h4>
+                        <p>Our state-of-the-art platform combines cutting-edge technology with proven learning methodologies to create an immersive language learning experience.</p>
+                        
+                        <h4 style="color: var(--matrix-green); margin: 2rem 0 1rem;">Key Platform Features:</h4>
+                        <ul style="list-style: none; margin-bottom: 2rem;">
+                            <li style="margin-bottom: 1rem;"><i class="fas fa-robot" style="color: var(--matrix-green); margin-right: 10px;"></i> AI Interactive Sessions</li>
+                            <li style="margin-bottom: 1rem;"><i class="fas fa-trophy" style="color: var(--matrix-green); margin-right: 10px;"></i> Progress Gamification Badges</li>
+                            <li style="margin-bottom: 1rem;"><i class="fas fa-route" style="color: var(--matrix-green); margin-right: 10px;"></i> Custom Learning Paths</li>
+                            <li style="margin-bottom: 1rem;"><i class="fas fa-globe-americas" style="color: var(--matrix-green); margin-right: 10px;"></i> Cultural Immersion Content</li>
+                            <li style="margin-bottom: 1rem;"><i class="fas fa-comments" style="color: var(--matrix-green); margin-right: 10px;"></i> Real-time Feedback System</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--matrix-green); margin: 2rem 0 1rem;">Available On All Devices</h4>
+                        <p>Access your learning materials anytime, anywhere. Our platform is fully optimized for desktop, tablet, and mobile devices.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-primary" onclick="closeModalAndScrollToContact()">Get Advised Now</button>
                     </div>
                 </div>
             </div>
@@ -661,6 +1030,7 @@
                     <li><a href="#background">Background</a></li>
                     <li><a href="#knowledge">Knowledge</a></li>
                     <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#platform">Platform</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -671,6 +1041,14 @@
             </div>
         </div>
     </footer>
+
+    <!-- Chat Widget -->
+    <iframe id="chat-frame" 
+        src="https://sobralfreenat.github.io/fnw_agb_chat_matrix/" 
+        frameborder="0" 
+        allow="clipboard-write"
+        class="closed">
+    </iframe>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -733,7 +1111,17 @@
                     }
                 });
                 
+                // Update both main nav and side nav active states
                 navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Update side navigation active state
+                const sideNavLinks = document.querySelectorAll('.side-nav a');
+                sideNavLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === `#${current}`) {
                         link.classList.add('active');
@@ -861,6 +1249,73 @@
                     }
                 }
             });
+        }
+
+        // Modal Functions
+        function openPlatformModal() {
+            const modal = document.getElementById('platformModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlatformModal() {
+            const modal = document.getElementById('platformModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('platformModal');
+            if (event.target == modal) {
+                closePlatformModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePlatformModal();
+            }
+        });
+
+        function closeModalAndScrollToContact() {
+            closePlatformModal();
+            const contactSection = document.querySelector('#contact');
+            const headerOffset = 80;
+            const elementPosition = contactSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Focus no campo de nome após um pequeno delay para garantir que o scroll terminou
+            setTimeout(() => {
+                document.getElementById('name').focus();
+            }, 1000);
+        }
+
+        // Enhanced chat iframe control
+        const chatFrame = document.getElementById('chat-frame');
+        
+        window.addEventListener('message', function(event) {
+            // Verify origin for security
+            if (event.origin !== 'https://sobralfreenat.github.io') return;
+            
+            // Listen for chat open/close events from the iframe
+            if (event.data === 'chat-opened') {
+                chatFrame.classList.remove('closed');
+            } else if (event.data === 'chat-closed') {
+                chatFrame.classList.add('closed');
+            }
+        });
+
+        // Ensure chat doesn't interfere with side navigation
+        const sideNav = document.querySelector('.side-nav');
+        if (sideNav) {
+            sideNav.style.zIndex = '1000';
         }
     </script>
 </body>
