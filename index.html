@@ -276,38 +276,25 @@
 
         /* Modern Buttons */
         .btn-primary {
-            background: linear-gradient(45deg, var(--matrix-green), #00cc33);
-            border: none;
+            background: transparent;
+            border: 2px solid var(--matrix-green);
             padding: 1rem 2rem;
             border-radius: 8px;
-            color: var(--black);
+            color: var(--matrix-green);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #00cc33, var(--matrix-green));
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
+            background: var(--matrix-green);
+            color: var(--black);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.3);
-        }
-
-        .btn-primary:hover::before {
-            opacity: 1;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
         }
 
         /* Modern Animations */
@@ -632,7 +619,7 @@
         /* Side Navigation */
         .side-nav {
             position: fixed;
-            right: 2rem;
+            left: 2rem;
             top: 50%;
             transform: translateY(-50%);
             z-index: 999;
@@ -667,6 +654,7 @@
 
         .side-nav a:hover {
             color: var(--matrix-green);
+            transform: scale(1.1);
         }
 
         .side-nav i {
@@ -676,7 +664,7 @@
 
         .side-nav .tooltip {
             position: absolute;
-            right: calc(100% + 10px);
+            left: calc(100% + 10px);
             top: 50%;
             transform: translateY(-50%);
             background: rgba(0, 0, 0, 0.9);
@@ -693,12 +681,7 @@
         .side-nav a:hover .tooltip {
             opacity: 1;
             visibility: visible;
-            right: calc(100% + 20px);
-        }
-
-        .side-nav a.active {
-            color: var(--matrix-green);
-            transform: scale(1.2);
+            left: calc(100% + 20px);
         }
 
         .side-nav a.active::before {
@@ -708,7 +691,7 @@
             height: 5px;
             background: var(--matrix-green);
             border-radius: 50%;
-            left: -10px;
+            right: -10px;
             box-shadow: 0 0 10px var(--matrix-green);
         }
 
@@ -724,17 +707,24 @@
             bottom: 20px;
             right: 20px;
             width: 380px;
-            height: 600px;
+            height: 680px;
             border: none;
-            background: transparent;
+            background: rgba(0, 0, 0, 0.85);
             z-index: 999;
             pointer-events: all;
             transition: transform 0.3s ease;
+            transform-origin: bottom right;
+            backdrop-filter: blur(5px);
         }
 
         #chat-frame.closed {
             pointer-events: all;
-            transform: scale(0.9);
+            transform: scale(0.89);
+        }
+
+        /* Ensure chat doesn't block navigation */
+        .side-nav {
+            z-index: 1000;
         }
     </style>
 </head>
@@ -1311,12 +1301,6 @@
                 chatFrame.classList.add('closed');
             }
         });
-
-        // Ensure chat doesn't interfere with side navigation
-        const sideNav = document.querySelector('.side-nav');
-        if (sideNav) {
-            sideNav.style.zIndex = '1000';
-        }
     </script>
 </body>
 </html> 
