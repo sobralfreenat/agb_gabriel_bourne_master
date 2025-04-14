@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Gabriel Bourne | Linguistic Transformation Master 4.0.4</title>
+    <title>Agent Gabriel Bourne | Linguistic Transformation Master 5.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Courier+Prime&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
@@ -328,15 +328,62 @@
                 padding: 1rem;
             }
             .nav-links {
+                /* Off-Canvas styles */
+                position: fixed; /* Changed from absolute */
+                top: 0;
+                right: -100%; /* Start off-screen to the right */
+                height: 100vh; /* Full height */
+                width: 250px; /* Adjust width as needed */
+                background-color: rgba(0, 0, 0, 0.98); /* Reduced transparency */
                 flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 10px;
-                background-color: rgba(0, 0, 0, 0.9);
-                width: calc(100% - 20px);
-                text-align: left;
-                transform: translateY(-20px);
+                align-items: center; /* Center items vertically */
+                justify-content: center; /* Center items horizontally */
+                padding-top: 60px; /* Space for close button or header */
+                transition: right 0.4s ease-in-out; /* Smooth slide transition */
+                z-index: 10001; /* Increased z-index for the menu */
+                display: flex; /* Keep display flex for nav-active to work */
+            }
+            .nav-active {
+                right: 0; /* Slide menu into view */
+            }
+            .burger {
+                display: block;
+                cursor: pointer;
+                z-index: 10002; /* Increased z-index for the burger button */
+                position: relative; /* Needed for potential animations */
+                padding: 5px; /* Add some padding if needed */
+            }
+            .burger div {
+                width: 25px;
+                height: 3px;
+                background-color: var(--white); /* Make sure lines are visible */
+                margin: 5px 0; /* Spacing between lines */
+                transition: all 0.3s ease; /* Transition for potential animation */
+            }
+            .burger.toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            .burger.toggle .line2 {
                 opacity: 0;
+            }
+            .burger.toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 10000; /* Increased z-index for the overlay */
+                display: none; /* Hidden by default */
+                opacity: 0;
+                transition: opacity 0.4s ease-in-out;
+            }
+            .overlay.active {
+                display: block; /* Show overlay */
+                opacity: 1;
             }
             .hero-content {
                 padding: 2rem 1rem;
@@ -356,31 +403,6 @@
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-            }
-            .burger {
-                display: block;
-                cursor: pointer;
-                z-index: 1001;
-            }
-            .burger div {
-                width: 25px;
-                height: 3px;
-                background-color: var(--white);
-                margin: 5px;
-                transition: all 0.3s ease;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 0;
-                background-color: rgba(0, 0, 0, 0.9);
-                width: 100%;
-                text-align: center;
-            }
-            .nav-active {
-                display: flex;
             }
             .form-group {
                 margin-bottom: 1.5rem;
@@ -406,6 +428,12 @@
             .modal-content {
                 width: 95%;
                 padding: 1rem;
+            }
+            .nav-links li {
+                margin-bottom: 1.5rem; /* Increased spacing between menu items */
+            }
+            .nav-links li:last-child {
+                margin-bottom: 0; /* Remove margin from the last item */
             }
         }
 
@@ -807,8 +835,18 @@
             border: none;
             width: 420px;
             height: 700px;
-            z-index: 500; /* Lower than the overlay and burger menu */
+            z-index: 9999; /* High z-index, but below mobile menu overlay/menu */
             allow: clipboard-write;
+            display: none; /* Hide by default */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Optional transition */
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        #chatIframe.chat-visible {
+            display: block; /* Show when active */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Highlight active menu item in green */
@@ -887,6 +925,12 @@
                     <span class="tooltip">Contact</span>
                 </a>
             </li>
+            <li>
+                <a href="#" id="chat-link-side">
+                    <i class="fas fa-comments"></i>
+                    <span class="tooltip">Chat</span>
+                </a>
+            </li>
         </ul>
     </nav>
     
@@ -903,6 +947,7 @@
                 <li><a href="#methodology">Methodology</a></li>
                 <li><a href="#platform">Platform</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#" id="chat-link">Chat</a></li>
             </ul>
             <div class="burger">
                 <div class="line1"></div>
@@ -1192,28 +1237,44 @@
             // Matrix code animation effect
             createMatrixEffect();
             
-            // Mobile navigation toggle
+            // Mobile navigation toggle for Off-Canvas
             const burger = document.querySelector('.burger');
             const nav = document.querySelector('.nav-links');
-            const overlay = document.createElement('div');
-            overlay.className = 'overlay';
-            document.body.appendChild(overlay);
-            
-            burger.addEventListener('click', function() {
+            let overlay = document.querySelector('.overlay'); // Try to find existing overlay
+
+            // Create overlay if it doesn't exist
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'overlay';
+                document.body.appendChild(overlay);
+            }
+
+            burger.addEventListener('click', function(event) {
+                event.stopPropagation(); // Prevent click from bubbling up
                 nav.classList.toggle('nav-active');
+                // overlay.classList.toggle('active'); // Temporarily comment out overlay activation
+                // Optional: Toggle burger animation class
                 burger.classList.toggle('toggle');
             });
-            
+
+            // Close menu when overlay is clicked
+            /* // Temporarily comment out overlay closing logic
             overlay.addEventListener('click', function() {
                 nav.classList.remove('nav-active');
+                overlay.classList.remove('active');
+                // Optional: Remove burger animation class
                 burger.classList.remove('toggle');
             });
-            
+            */
+
+            // Close menu when a nav link is clicked (optional but good UX)
             nav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', function() {
                     nav.classList.remove('nav-active');
+                    // overlay.classList.remove('active'); // Temporarily comment out overlay deactivation
+                    // Optional: Remove burger animation class
                     burger.classList.remove('toggle');
-                    overlay.style.display = 'none';
+                    // Smooth scroll logic should already be handled by other listeners
                 });
             });
             
@@ -1355,6 +1416,32 @@
                     });
                 }
             });
+
+            // Chat Link Logic
+            const chatIframe = document.getElementById('chatIframe');
+            const chatLinkHeader = document.getElementById('chat-link');
+            const chatLinkSide = document.getElementById('chat-link-side');
+            const mobileNav = document.querySelector('.nav-links');
+            const mobileBurger = document.querySelector('.burger');
+            const mobileOverlay = document.querySelector('.overlay');
+            
+            function toggleChatVisibility(e) {
+                e.preventDefault();
+                chatIframe.classList.toggle('chat-visible');
+
+                if (mobileNav.classList.contains('nav-active')) {
+                    mobileNav.classList.remove('nav-active');
+                    mobileOverlay.classList.remove('active');
+                    mobileBurger.classList.remove('toggle');
+                }
+            }
+
+            if (chatLinkHeader && chatIframe) {
+                chatLinkHeader.addEventListener('click', toggleChatVisibility);
+            }
+            if (chatLinkSide && chatIframe) {
+                chatLinkSide.addEventListener('click', toggleChatVisibility);
+            }
         });
 
         // Matrix code effect function
@@ -1489,53 +1576,6 @@
                 document.getElementById('name').focus();
             }, 1000);
         }
-
-        // Chat iframe communication
-        const chatIframe = document.getElementById('chatIframe');
-        let isChatOpen = false;
-
-        // Listen for messages from the chat iframe
-        window.addEventListener('message', function(event) {
-            console.log('Parent received message:', event.data);
-            if (event.data === 'chat-opened') {
-                isChatOpen = true;
-                console.log('Chat opened in parent');
-            } else if (event.data === 'chat-closed') {
-                isChatOpen = false;
-                console.log('Chat closed in parent');
-            }
-        });
-
-        // Function to toggle chat
-        function toggleChat() {
-            console.log('Parent sending toggle message');
-            chatIframe.contentWindow.postMessage('toggle-chat', '*');
-        }
-
-        // Add click event to the chat toggle button area
-        document.addEventListener('click', function(event) {
-            const rect = chatIframe.getBoundingClientRect();
-            const clickX = event.clientX;
-            const clickY = event.clientY;
-
-            // Expanded click detection area
-            const buttonSize = 70;
-            const margin = 10;
-            
-            const buttonRight = rect.right - margin;
-            const buttonLeft = buttonRight - buttonSize;
-            const buttonBottom = rect.bottom - margin;
-            const buttonTop = buttonBottom - buttonSize;
-
-            console.log('Click coordinates:', { x: clickX, y: clickY });
-            console.log('Button area:', { left: buttonLeft, right: buttonRight, top: buttonTop, bottom: buttonBottom });
-
-            if (clickX >= buttonLeft && clickX <= buttonRight &&
-                clickY >= buttonTop && clickY <= buttonBottom) {
-                console.log('Toggle button area clicked');
-                toggleChat();
-            }
-        });
     </script>
 </body>
 </html> 
