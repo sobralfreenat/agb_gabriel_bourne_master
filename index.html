@@ -83,9 +83,8 @@
             background-color: rgba(0, 0, 0, 0.9);
             width: 100%;
             text-align: center;
-            transition: max-height 0.3s ease, opacity 0.3s ease;
-            max-height: 0;
-            overflow: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: translateY(-20px);
             opacity: 0;
         }
 
@@ -114,7 +113,7 @@
         }
 
         .nav-active {
-            max-height: 500px; /* Adjust based on content */
+            transform: translateY(0);
             opacity: 1;
         }
 
