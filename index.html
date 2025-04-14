@@ -75,17 +75,14 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
-            flex-direction: column;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.9);
-            width: 100%;
+            gap: 1rem;
+            flex-direction: row;
+            position: static;
+            background-color: transparent;
+            width: auto;
             text-align: center;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            transform: translateY(-20px);
-            opacity: 0;
+            transform: none;
+            opacity: 1;
         }
 
         .nav-links a {
@@ -331,8 +328,15 @@
                 padding: 1rem;
             }
             .nav-links {
-                width: 100%;
-                padding: 1rem 0;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 10px;
+                background-color: rgba(0, 0, 0, 0.9);
+                width: calc(100% - 20px);
+                text-align: left;
+                transform: translateY(-20px);
+                opacity: 0;
             }
             .hero-content {
                 padding: 2rem 1rem;
@@ -1191,18 +1195,18 @@
             // Mobile navigation toggle
             const burger = document.querySelector('.burger');
             const nav = document.querySelector('.nav-links');
-            const overlay = document.createElement('div');
-            overlay.className = 'overlay';
-            document.body.appendChild(overlay);
+            const overlay = document.querySelector('.overlay');
             
             burger.addEventListener('click', function() {
                 nav.classList.toggle('nav-active');
                 burger.classList.toggle('toggle');
+                overlay.style.display = nav.classList.contains('nav-active') ? 'block' : 'none';
             });
             
             overlay.addEventListener('click', function() {
                 nav.classList.remove('nav-active');
                 burger.classList.remove('toggle');
+                overlay.style.display = 'none';
             });
             
             nav.querySelectorAll('a').forEach(link => {
