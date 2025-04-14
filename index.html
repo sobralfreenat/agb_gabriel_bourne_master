@@ -325,17 +325,33 @@
 
         /* Responsive Design */
         @media screen and (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
+            .main-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
             }
-            .hero h2 {
-                font-size: 2rem;
+            .nav-links {
+                width: 100%;
+                padding: 1rem 0;
             }
-            .hero p {
-                font-size: 1rem;
+            .hero-content {
+                padding: 2rem 1rem;
             }
-            .hero {
-                padding: 6rem 1rem;
+            .expertise-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .modal-content {
+                width: 90%;
+                padding: 1rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
             .burger {
                 display: block;
@@ -361,10 +377,6 @@
             }
             .nav-active {
                 display: flex;
-            }
-            .expertise-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
             }
             .form-group {
                 margin-bottom: 1.5rem;
