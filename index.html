@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Gabriel Bourne | Linguistic Transformation Master 6.1</title>
+    <title>Agent Gabriel Bourne | Linguistic Transformation Master 6.0</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Courier+Prime&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
@@ -51,6 +51,18 @@
         }
 
         /* Modern Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
         .main-nav {
             display: flex;
             justify-content: space-between;
@@ -169,7 +181,7 @@
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 4.5rem;
             margin-bottom: 2rem;
             background: linear-gradient(45deg, var(--white), var(--matrix-green));
             -webkit-background-clip: text;
@@ -448,34 +460,6 @@
 
             section {
                 padding: 6rem 1rem; /* Reduced horizontal padding for mobile */
-            }
-
-            .side-nav {
-                display: flex; /* Ensure it's visible */
-                left: -2; /* Move TO the left edge */
-                /* Keep other necessary styles like position, top, transform, z-index */
-                position: fixed;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 999; 
-                padding: 0.5rem 0.25rem; /* Keep reduced padding */
-                /* Remove background/border if it touches the edge */
-                background: none;
-                border: none;
-                box-shadow: none;
-            }
-
-            .side-nav a {
-                padding: 0.6rem; /* Slightly adjust icon padding if needed */
-            }
-
-            /* Tooltips might need adjustment or hiding on mobile */
-            .side-nav .tooltip {
-                display: none; /* Hide tooltips on mobile for cleaner look */
-            }
-
-            main {
-                padding-left: 6.5rem; /* Increased left padding to main content to avoid overlap with side-nav */
             }
         }
 
